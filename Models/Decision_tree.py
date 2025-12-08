@@ -107,7 +107,7 @@ class DecisionTree:
         class_counts = {}
         for label in y:
             class_counts[label] = class_counts.get(label, 0) + 1
-        return max(class_counts, key=class_counts.get)
+        return max(class_counts, key=lambda k: class_counts[k])
 
     def predict(self, X):
         return [self._predict_one(x, self.tree) for x in X]

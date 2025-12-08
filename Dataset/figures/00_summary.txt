@@ -1,0 +1,3 @@
+Rows after cleaning: 68625
+Class counts -> 0: 34652, 1: 33973, Total: 68625
+Positive class %: 49.51%

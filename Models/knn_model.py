@@ -13,7 +13,7 @@ import sys
 # A. PREPROCESSING FUNCTIONS
 
 def load_raw(path: Path) -> pd.DataFrame:
-    df = pd.read_csv("/content/cardio_train.csv", sep=";")
+    df = pd.read_csv(path, sep=";")
     df.columns = [c.strip().lower() for c in df.columns]
     return df
 
@@ -83,10 +83,10 @@ def get_processed_data(input_csv: Path) -> tuple[np.ndarray, np.ndarray]:
 
     df_model = pd.get_dummies(df_scaled.drop(['id', 'age_group'], axis=1), drop_first=True)
 
-    X = df_model.drop('cardio', axis=1).values
-    y = df_model['cardio'].values
+    X = df_model.drop('cardio', axis=1).values.astype(np.float64)
+    y = df_model['cardio'].values.astype(np.int64)
 
-    return X, y
+    return X, y  # type: ignore
 
 # B. CUSTOM K-NN CLASSIFIER
 
@@ -103,7 +103,7 @@ class CustomKNN:
     def _euclidean_distance(self, x1: np.ndarray, x2: np.ndarray) -> float:
         """Calculates the Euclidean distance between two vectors."""
         # Distance formula: sqrt( sum( (x1_i - x2_i)^2 ) )
-        return np.linalg.norm(x1 - x2)
+        return float(np.linalg.norm(x1 - x2))
 
     def _predict(self, x_new: np.ndarray) -> int:
         """Predicts the class label for a single new data point."""
@@ -119,7 +119,7 @@ class CustomKNN:
         # Majority vote: get the most frequent class label
         most_common = Counter(k_nearest_labels).most_common(1)
 
-        return most_common[0][0]
+        return int(most_common[0][0])
 
     def predict(self, X: np.ndarray) -> np.ndarray:
         """Predicts the class labels for an array of test data points."""
@@ -129,7 +129,7 @@ class CustomKNN:
 # C. EXECUTION, EVALUATION, AND REPORTING
 
 def run_knn_experiment():
-    X, y = get_processed_data(Path("/content/cardio_train.csv"))
+    X, y = get_processed_data(Path("Dataset/cardio_train.csv"))
 
     # Split the data into training and testing sets (80/20 split)
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
