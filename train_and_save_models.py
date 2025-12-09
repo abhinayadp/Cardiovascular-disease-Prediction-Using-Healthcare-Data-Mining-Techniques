@@ -273,7 +273,7 @@ def main():
     # Save scaler for GUI to use on new raw inputs
     with open('models/scaler.pkl', 'wb') as f:
         pickle.dump(scaler, f)
-    print("   ✓ Scaler saved to models/scaler.pkl")
+    print("   Scaler saved to models/scaler.pkl")
     
     # Convert to numpy - data is now properly scaled
     X_train_np = X_train_scaled.values.astype(np.float64)
@@ -291,7 +291,7 @@ def main():
     
     with open('models/lr_model.pkl', 'wb') as f:
         pickle.dump(lr_model, f)
-    print("   ✓ Logistic Regression saved to models/lr_model.pkl")
+    print("   Logistic Regression saved to models/lr_model.pkl")
     
     # Evaluate
     y_pred_lr = lr_model.predict(X_test_np)
@@ -305,7 +305,7 @@ def main():
     
     with open('models/dt_model.pkl', 'wb') as f:
         pickle.dump(dt_model, f)
-    print("   ✓ Decision Tree saved to models/dt_model.pkl")
+    print("   Decision Tree saved to models/dt_model.pkl")
     
     # Evaluate
     y_pred_dt = dt_model.predict(X_test_np)

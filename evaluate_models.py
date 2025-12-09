@@ -175,9 +175,9 @@ def load_models():
         try:
             with open(filepath, 'rb') as f:
                 models[name] = pickle.load(f)
-            print(f"  ✓ {name} loaded")
+            print(f"  {name} loaded")
         except FileNotFoundError:
-            print(f"  ✗ {name} not found at {filepath}")
+            print(f"  {name} not found at {filepath}")
     
     return models
 
@@ -239,7 +239,7 @@ def plot_confusion_matrices(cms, model_names):
     
     plt.tight_layout()
     plt.savefig('Dataset/figures/confusion_matrices.png', dpi=300, bbox_inches='tight')
-    print("  ✓ Confusion matrices saved to Dataset/figures/confusion_matrices.png")
+    print("  Confusion matrices saved to Dataset/figures/confusion_matrices.png")
     plt.close()
 
 def plot_roc_curves(models, X_test, y_test):
@@ -270,7 +270,7 @@ def plot_roc_curves(models, X_test, y_test):
     plt.grid(alpha=0.3)
     
     plt.savefig('Dataset/figures/roc_curves.png', dpi=300, bbox_inches='tight')
-    print("  ✓ ROC curves saved to Dataset/figures/roc_curves.png")
+    print("  ROC curves saved to Dataset/figures/roc_curves.png")
     plt.close()
 
 def plot_metrics_comparison(metrics_df):
@@ -303,7 +303,7 @@ def plot_metrics_comparison(metrics_df):
     
     plt.tight_layout()
     plt.savefig('Dataset/figures/metrics_comparison.png', dpi=300, bbox_inches='tight')
-    print("  ✓ Metrics comparison saved to Dataset/figures/metrics_comparison.png")
+    print("  Metrics comparison saved to Dataset/figures/metrics_comparison.png")
     plt.close()
 
 def interpret_results(metrics_df):
@@ -318,13 +318,13 @@ def interpret_results(metrics_df):
     best_recall = metrics_df.loc[metrics_df['Recall'].idxmax()]
     best_precision = metrics_df.loc[metrics_df['Precision'].idxmax()]
     
-    print(f"\n🏆 BEST PERFORMERS:")
-    print(f"  • Highest Accuracy:  {best_accuracy['Model']} ({best_accuracy['Accuracy']:.3f})")
-    print(f"  • Highest F1-Score:  {best_f1['Model']} ({best_f1['F1-Score']:.3f})")
-    print(f"  • Highest Recall:    {best_recall['Model']} ({best_recall['Recall']:.3f})")
-    print(f"  • Highest Precision: {best_precision['Model']} ({best_precision['Precision']:.3f})")
+    print(f"\nBEST PERFORMERS:")
+    print(f"  Highest Accuracy:  {best_accuracy['Model']} ({best_accuracy['Accuracy']:.3f})")
+    print(f"  Highest F1-Score:  {best_f1['Model']} ({best_f1['F1-Score']:.3f})")
+    print(f"  Highest Recall:    {best_recall['Model']} ({best_recall['Recall']:.3f})")
+    print(f"  Highest Precision: {best_precision['Model']} ({best_precision['Precision']:.3f})")
     
-    print(f"\n📊 PERFORMANCE ASSESSMENT:")
+    print(f"\nPERFORMANCE ASSESSMENT:")
     
     for _, row in metrics_df.iterrows():
         model = row['Model']
@@ -348,16 +348,16 @@ def interpret_results(metrics_df):
         rec = row['Recall']
         
         if abs(prec - rec) < 0.05:
-            print(f"  ✓ Well-balanced precision ({prec:.3f}) and recall ({rec:.3f})")
+            print(f"  Well-balanced precision ({prec:.3f}) and recall ({rec:.3f})")
         elif prec > rec:
-            print(f"  ⚠ Higher precision ({prec:.3f}) than recall ({rec:.3f})")
-            print(f"     → Model is conservative (fewer false positives, more false negatives)")
+            print(f"  Higher precision ({prec:.3f}) than recall ({rec:.3f})")
+            print(f"     Model is conservative (fewer false positives, more false negatives)")
         else:
-            print(f"  ⚠ Higher recall ({rec:.3f}) than precision ({prec:.3f})")
-            print(f"     → Model is aggressive (more false positives, fewer false negatives)")
+            print(f"  Higher recall ({rec:.3f}) than precision ({prec:.3f})")
+            print(f"     Model is aggressive (more false positives, fewer false negatives)")
         
         # Clinical context
-        print(f"  • For CVD screening: ", end="")
+        print(f"  For CVD screening: ", end="")
         if rec >= 0.75:
             print(f"Good recall ({rec:.3f}) - catches most disease cases")
         else:
@@ -402,7 +402,7 @@ For Medical Diagnosis:
 - F1-Score gives overall balance
 """)
     
-    print(f"  ✓ Detailed report saved to {output_path}")
+    print(f"  Detailed report saved to {output_path}")
 
 def main():
     print("="*80)
@@ -478,13 +478,13 @@ def main():
     interpret_results(metrics_df)
     
     print("\n" + "="*80)
-    print("✓ EVALUATION COMPLETE!")
+    print("EVALUATION COMPLETE")
     print("="*80)
     print("\nGenerated files:")
-    print("  • Dataset/figures/confusion_matrices.png")
-    print("  • Dataset/figures/roc_curves.png")
-    print("  • Dataset/figures/metrics_comparison.png")
-    print("  • Dataset/figures/model_evaluation_report.txt")
+    print("  Dataset/figures/confusion_matrices.png")
+    print("  Dataset/figures/roc_curves.png")
+    print("  Dataset/figures/metrics_comparison.png")
+    print("  Dataset/figures/model_evaluation_report.txt")
 
 if __name__ == "__main__":
     main()

@@ -229,13 +229,13 @@ def test_predictions():
             
             # Check if matches expected (allowing borderline cases)
             if test_case['expected'] == 'BORDERLINE':
-                match = "✓ OK"  # Any prediction is acceptable for borderline
+                match = "OK"  # Any prediction is acceptable for borderline
                 passed_tests += 1
             elif risk_status == test_case['expected']:
-                match = "✓ PASS"
+                match = "PASS"
                 passed_tests += 1
             else:
-                match = "✗ FAIL"
+                match = "FAIL"
             
             print(f"  {model_name:<20} {risk_status:<15} {score_str:<15} {match:<10}")
     
@@ -247,11 +247,11 @@ def test_predictions():
     print(f"Success Rate: {passed_tests/total_tests*100:.1f}%")
     
     if passed_tests == total_tests:
-        print("\n✓ ALL TESTS PASSED! Models are working correctly.")
+        print("\nALL TESTS PASSED! Models are working correctly.")
     elif passed_tests >= total_tests * 0.8:
-        print("\n⚠ MOST TESTS PASSED. Some borderline cases may vary.")
+        print("\nMOST TESTS PASSED. Some borderline cases may vary.")
     else:
-        print("\n✗ MANY TESTS FAILED. Please review model training.")
+        print("\nMANY TESTS FAILED. Please review model training.")
     
     print("\n" + "="*80)
     print("RECOMMENDATIONS FOR GUI TESTING:")
