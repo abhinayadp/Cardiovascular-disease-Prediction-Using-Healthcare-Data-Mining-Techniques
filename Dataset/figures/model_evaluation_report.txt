@@ -1,40 +1,33 @@
-
+================================================================================
 CARDIOVASCULAR DISEASE PREDICTION - MODEL EVALUATION REPORT
-
+================================================================================
 
 SUMMARY METRICS
 --------------------------------------------------------------------------------
               Model  Accuracy  Precision   Recall  F1-Score  ROC-AUC
-Logistic Regression  0.727213   0.748001 0.668105  0.705799 0.789815
-      Decision Tree  0.726703   0.724565 0.713032  0.718752 0.726429
-               K-NN  0.714171   0.724819 0.671229  0.696995 0.713310
+Logistic Regression  0.727067   0.747917 0.667807  0.705596 0.789153
+      Decision Tree  0.726630   0.724456 0.713032  0.718698 0.726357
 
 DETAILED CLASSIFICATION METRICS
 --------------------------------------------------------------------------------
 
 Logistic Regression:
-  True Positives:  4491
+  True Positives:  4489
   True Negatives:  5490
   False Positives: 1513
-  False Negatives: 2231
+  False Negatives: 2233
   Specificity:     0.7839
 
 Decision Tree:
   True Positives:  4793
-  True Negatives:  5181
-  False Positives: 1822
+  True Negatives:  5180
+  False Positives: 1823
   False Negatives: 1929
-  Specificity:     0.7398
+  Specificity:     0.7397
 
-K-NN:
-  True Positives:  4512
-  True Negatives:  5290
-  False Positives: 1713
-  False Negatives: 2210
-  Specificity:     0.7554
-
-
+================================================================================
 INTERPRETATION GUIDE
+================================================================================
 
 Accuracy:  Overall correctness (TP+TN)/(TP+TN+FP+FN)
 Precision: Of predicted positives, how many are correct? TP/(TP+FP)

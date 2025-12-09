@@ -169,7 +169,6 @@ def load_models():
     model_files = {
         'Logistic Regression': 'models/lr_model.pkl',
         'Decision Tree': 'models/dt_model.pkl',
-        'K-NN': 'models/knn_model.pkl'
     }
     
     for name, filepath in model_files.items():

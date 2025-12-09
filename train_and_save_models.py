@@ -312,23 +312,6 @@ def main():
     print(f"      Accuracy: {accuracy_score(y_test_np, y_pred_dt):.4f}")
     print(f"      F1-Score: {f1_score(y_test_np, y_pred_dt):.4f}")
     
-    # 3. K-NN (using smaller subset for speed)
-    print("\n   Training K-NN (using subset for speed)...")
-    # Use 20% of training data for KNN to make it faster
-    subset_size = int(0.2 * len(X_train_np))
-    knn_model = CustomKNN(k=11)
-    knn_model.fit(X_train_np[:subset_size], y_train_np[:subset_size])
-    
-    with open('models/knn_model.pkl', 'wb') as f:
-        pickle.dump(knn_model, f)
-    print("   ✓ K-NN saved to models/knn_model.pkl")
-    
-    # Evaluate (on small test subset for speed)
-    test_subset = min(100, len(X_test_np))
-    y_pred_knn = knn_model.predict(X_test_np[:test_subset])
-    print(f"      Accuracy (on {test_subset} samples): {accuracy_score(y_test_np[:test_subset], y_pred_knn):.4f}")
-    print(f"      F1-Score (on {test_subset} samples): {f1_score(y_test_np[:test_subset], y_pred_knn):.4f}")
-    
     print("\n" + "=" * 70)
     print("[5/5] ALL MODELS TRAINED AND SAVED SUCCESSFULLY!")
     print("=" * 70)
@@ -338,7 +321,6 @@ def main():
     print("  - scaler.pkl")
     print("  - lr_model.pkl")
     print("  - dt_model.pkl")
-    print("  - knn_model.pkl")
 
 if __name__ == "__main__":
     main()

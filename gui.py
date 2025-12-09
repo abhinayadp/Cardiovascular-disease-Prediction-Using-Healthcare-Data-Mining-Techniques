@@ -118,7 +118,6 @@ class DecisionTree:
 MODEL_OPTIONS = {
     "Logistic Regression (LR)": "lr_model.pkl",
     "Decision Tree (DT)": "dt_model.pkl",
-    "k-Nearest Neighbors (k-NN)": "knn_model.pkl",
 }
 SCALER_PATH = Path("models/scaler.pkl")
 
@@ -278,8 +277,9 @@ def main():
                 try:
                     if selected_model_name == "Logistic Regression (LR)":
                         score = selected_model.predict_proba(scaled_input)[0, 1]  # type: ignore
-                    elif selected_model_name == "k-Nearest Neighbors (k-NN)":
-                        score = selected_model.predict(scaled_input)[0]  # type: ignore
+                    else:
+                        # For Decision Tree, use prediction as score
+                        score = prediction  # type: ignore
                 except:
                     score = prediction 
                 
@@ -300,10 +300,6 @@ def main():
                         st.write("The **high positive coefficients** (from training) for **Age, Systolic BP, and BMI** drove the prediction toward high risk.")
                     else:
                         st.write("The model found that key risk factors were within normal ranges or balanced by lifestyle (active/non-smoking).")
-
-                elif selected_model_name == "k-Nearest Neighbors (k-NN)":
-                    st.info("This model is based on similarity.")
-                    st.write("The prediction is based on the majority class of the **11 (or K) most similar patients** found in the historical training data.")
 
                 elif selected_model_name == "Decision Tree (DT)":
                     st.success("The DT provides a clear clinical pathway.")

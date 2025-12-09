@@ -86,15 +86,12 @@ with open('models/lr_model.pkl', 'rb') as f:
     lr_model = pickle.load(f)
 with open('models/dt_model.pkl', 'rb') as f:
     dt_model = pickle.load(f)
-with open('models/knn_model.pkl', 'rb') as f:
-    knn_model = pickle.load(f)
 with open('models/scaler.pkl', 'rb') as f:
     scaler = pickle.load(f)
 
 models = {
     'Logistic Regression': lr_model,
     'Decision Tree': dt_model,
-    'K-NN': knn_model
 }
 
 # Define test cases
@@ -263,7 +260,7 @@ def test_predictions():
     print("2. Test the same cases manually in the GUI")
     print("3. Verify BMI and Pulse Pressure calculations match")
     print("4. Compare predictions with results above")
-    print("5. Check all three models (LR, DT, K-NN) give similar results")
+    print("5. Check both models (LR, DT) give similar results")
     print("\nSee test_cases_for_gui.md for detailed test instructions!")
 
 if __name__ == "__main__":
