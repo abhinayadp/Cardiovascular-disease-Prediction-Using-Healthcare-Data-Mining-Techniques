@@ -4,6 +4,7 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Optional
 
+# pyrefly: ignore [missing-import]
 import numpy as np
 
 
