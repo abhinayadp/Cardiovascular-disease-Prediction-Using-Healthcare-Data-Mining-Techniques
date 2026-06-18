@@ -5,13 +5,13 @@
 
 ---
 
-## 📌 Overview
+## Overview
 
 This project is a comprehensive Machine Learning system designed to predict the risk of Cardiovascular Disease (CVD) based on patient health metrics and lifestyle choices. 
 
-**This is not just another dataset tutorial.** This project demonstrates a complete end-to-end data science lifecycle, from robust data preprocessing and feature engineering, to training both library-based and **custom from-scratch algorithms**, culminating in an interactive Streamlit Web GUI for clinical predictions.
+This project demonstrates a complete end-to-end data science lifecycle, from robust data preprocessing and feature engineering, to training both library-based and **custom from-scratch algorithms**, culminating in an interactive Streamlit Web GUI for clinical predictions.
 
-## 🚀 Key Features
+## Key Features
 
 *   **Robust Data Preprocessing:** Cleans noisy healthcare data, handles implausible outliers (e.g., negative blood pressure), and prepares reliable datasets.
 *   **Intelligent Feature Engineering:** Derives critical clinical features such as **BMI** (from height and weight) and **Pulse Pressure** (Systolic - Diastolic BP) to improve model predictive power.
@@ -21,10 +21,10 @@ This project is a comprehensive Machine Learning system designed to predict the 
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```text
-📦 Cardiovascular-Disease-Prediction
+ Cardiovascular-Disease-Prediction
  ┣ 📂 Dataset/               # Contains raw and cleaned data (cardio_train.csv)
  ┣ 📂 Models/                # Custom from-scratch algorithm implementations
  ┣ 📂 Preprocessing/         # Data cleaning and feature engineering pipelines
@@ -38,7 +38,7 @@ This project is a comprehensive Machine Learning system designed to predict the 
 
 ---
 
-## ⚙️ Installation & Setup
+## Installation & Setup
 
 It is highly recommended to use a virtual environment to run this project. 
 
@@ -66,7 +66,7 @@ pip install -r requirements.txt
 
 ---
 
-## 💻 Usage Instructions
+## Usage Instructions
 
 ### 1. Launch the Web Application (GUI)
 The easiest way to interact with the models is through the Streamlit interface. Make sure your virtual environment is active, then run:
@@ -86,7 +86,7 @@ python train_and_save_models.py
 
 ---
 
-## 🧠 Under the Hood: The Models
+## Under the Hood: The Models
 
 This project implements several approaches to classify patient risk:
 
@@ -94,10 +94,11 @@ This project implements several approaches to classify patient risk:
 2.  **Decision Tree:** Provides a clear "clinical pathway" or ruleset (e.g., *If Age > 55 and BMI > 30, then High Risk*).
 3.  **Random Forest:** An ensemble method that averages the decisions of hundreds of trees, protecting against overfitting and improving general accuracy.
 4.  **Support Vector Machine (SVM):** Finds the optimal hyperplane in our 13-dimensional feature space to distinctly separate high-risk and low-risk patients.
+5.  **K-Nearest Neighbors (KNN):** A custom from-scratch implementation that classifies patients based on their similarity to historical cases. *(Note: While successfully implemented, this model is excluded from the active Streamlit GUI as it proved less reliable/stable for live clinical predictions compared to the others).*
 
 *Note: All numerical features are scaled using `StandardScaler` to ensure algorithms relying on distance metrics (like SVM and K-NN) or gradients (like Logistic Regression) perform optimally.*
 
 ---
 
-## 🤝 Contributing
+## Contributing
 Feel free to fork this repository, submit pull requests, or open an issue if you have suggestions for new features or improvements.
