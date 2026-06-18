@@ -12,6 +12,9 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 from collections import Counter
 from dataclasses import dataclass, field
 
+from Models.random_forest import CustomRandomForest
+from Models.svm_model import CustomSVM
+
 # Create models directory
 Path("models").mkdir(exist_ok=True)
 
@@ -312,6 +315,34 @@ def main():
     print(f"      Accuracy: {accuracy_score(y_test_np, y_pred_dt):.4f}")
     print(f"      F1-Score: {f1_score(y_test_np, y_pred_dt):.4f}")
     
+    # 3. Random Forest
+    print("\n   Training Random Forest...")
+    rf_model = CustomRandomForest(n_estimators=100, max_depth=12, random_state=42)
+    rf_model.fit(X_train_np, y_train_np)
+    
+    with open('models/rf_model.pkl', 'wb') as f:
+        pickle.dump(rf_model, f)
+    print("   Random Forest saved to models/rf_model.pkl")
+    
+    # Evaluate
+    y_pred_rf = rf_model.predict(X_test_np)
+    print(f"      Accuracy: {accuracy_score(y_test_np, y_pred_rf):.4f}")
+    print(f"      F1-Score: {f1_score(y_test_np, y_pred_rf):.4f}")
+
+    # 4. Support Vector Machine (SVM)
+    print("\n   Training SVM (LinearSVC calibrated)...")
+    svm_model = CustomSVM(random_state=42, max_iter=2000)
+    svm_model.fit(X_train_np, y_train_np)
+    
+    with open('models/svm_model.pkl', 'wb') as f:
+        pickle.dump(svm_model, f)
+    print("   SVM saved to models/svm_model.pkl")
+    
+    # Evaluate
+    y_pred_svm = svm_model.predict(X_test_np)
+    print(f"      Accuracy: {accuracy_score(y_test_np, y_pred_svm):.4f}")
+    print(f"      F1-Score: {f1_score(y_test_np, y_pred_svm):.4f}")
+    
     print("\n" + "=" * 70)
     print("[5/5] ALL MODELS TRAINED AND SAVED SUCCESSFULLY!")
     print("=" * 70)
@@ -321,6 +352,8 @@ def main():
     print("  - scaler.pkl")
     print("  - lr_model.pkl")
     print("  - dt_model.pkl")
+    print("  - rf_model.pkl")
+    print("  - svm_model.pkl")
 
 if __name__ == "__main__":
     main()

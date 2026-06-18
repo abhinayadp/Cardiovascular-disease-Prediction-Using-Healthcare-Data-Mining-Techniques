@@ -118,6 +118,8 @@ class DecisionTree:
 MODEL_OPTIONS = {
     "Logistic Regression (LR)": "lr_model.pkl",
     "Decision Tree (DT)": "dt_model.pkl",
+    "Random Forest (RF)": "rf_model.pkl",
+    "Support Vector Machine (SVM)": "svm_model.pkl",
 }
 SCALER_PATH = Path("models/scaler.pkl")
 
@@ -141,7 +143,7 @@ def load_models_and_scaler() -> Tuple[Optional[Dict], Optional[Any]]:
         return models, scaler
         
     except FileNotFoundError:
-        st.error("FATAL ERROR: Model files not found. Ensure models/ directory exists and contains all 4 files.")
+        st.error("FATAL ERROR: Model files not found. Ensure models/ directory exists and contains all required files.")
         return None, None
     except Exception as e:
         st.error(f"FATAL ERROR during model loading: {e}")
@@ -160,25 +162,17 @@ def preprocess_input(input_data: Dict[str, Any], scaler: Any) -> Tuple[Optional[
             'age', 'height', 'weight', 'ap_hi', 'ap_lo', 'bmi', 'pulse_pressure'
         ]
         
-        # Scale the inputs using the fitted scaler
-        scaled_continuous_input = scaler.transform(df_input[SCALING_ONLY_FEATURES].values)
+        # Scale the continuous features using the fitted scaler
+        df_input[SCALING_ONLY_FEATURES] = scaler.transform(df_input[SCALING_ONLY_FEATURES])
 
-        # Rebuild the final 13-feature vector: 
-        # The first 7 columns are scaled, the remaining 6 (categorical/binary) are untouched.
-        
-        categorical_features = [
-             df_input['gender'].iloc[0], 
-             df_input['cholesterol'].iloc[0], 
-             df_input['gluc'].iloc[0], 
-             df_input['smoke'].iloc[0], 
-             df_input['alco'].iloc[0], 
-             df_input['active'].iloc[0]
+        # Arrange columns in the exact order the model expects (same as training data)
+        EXPECTED_COLUMNS = [
+            'age', 'gender', 'height', 'weight', 'ap_hi', 'ap_lo', 
+            'cholesterol', 'gluc', 'smoke', 'alco', 'active', 'bmi', 'pulse_pressure'
         ]
+        
+        final_13_feature_vector = df_input[EXPECTED_COLUMNS].values
 
-        final_13_feature_vector = np.concatenate([
-            scaled_continuous_input.flatten(),
-            np.array(categorical_features)
-        ]).reshape(1, -1) 
         
         return final_13_feature_vector, df_input['bmi'].iloc[0] 
 
@@ -305,6 +299,16 @@ def main():
                     st.success("The DT provides a clear clinical pathway.")
                     st.write("The prediction followed a specific **branch of clinical rules** (e.g., *IF Age > 55 AND BMI > 30*).")
                     st.write("This makes the result directly defensible using simple thresholds.")
+
+                elif selected_model_name == "Random Forest (RF)":
+                    st.success("RF provides highly reliable consensus predictions.")
+                    st.write("This prediction is the **majority vote of hundreds of distinct decision trees**.")
+                    st.write("By averaging many trees, it minimizes the errors and biases of any single pathway.")
+
+                elif selected_model_name == "Support Vector Machine (SVM)":
+                    st.success("SVM separates high and low risk patients mathematically.")
+                    st.write("The model looked at how your metrics fall relative to the **maximum-margin boundary** in 13-dimensional space.")
+                    st.write("Scores closer to 1.0 indicate you are deeply within the high-risk region.")
 
                 st.markdown("---")
                 
